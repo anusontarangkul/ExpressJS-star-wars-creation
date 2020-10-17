@@ -6,6 +6,16 @@ module.exports = function (app) {
         return res.json(characters);
     });
 
+    app.get("/api/characters/:character", (req, res) => {
+        let chosen = req.params.character;
+        for (let i = 0; i < characters.length; i++) {
+            if (chosen === characters[i].routeName) {
+                return res.json(characters[i]);
+            }
+        }
+        return res.json(false);
+    })
+
     app.post("/api/characters/new", (req, res) => {
         let newCharacter = req.body;
         newCharacter.routeName = newCharacter.name.replace(/\s+/g, "").toLowerCase();
@@ -16,6 +26,3 @@ module.exports = function (app) {
 
 }
 
-// app.get("/add", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../public/add.html"))
-// })
